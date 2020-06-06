@@ -1,11 +1,18 @@
 import React from 'react';
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, StyleSheet, TouchableOpacity, Image, Text, SafeAreaView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
+interface RouteParams {
+    point_id: number;
+}
+
 const Detail = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const routeParams = route.params as RouteParams;
 
     function handleNavigateToBack(){
         navigation.goBack();
