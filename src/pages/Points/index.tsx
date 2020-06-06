@@ -1,9 +1,33 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Feather as Icon } from '@expo/vector-icons'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import MapView from 'react-native-maps';
 import Constants from 'expo-constants';
 
 const Points = () => {
-    return <View />;
+    const navigation = useNavigation();
+
+    function handleNavigateToBack(){
+        navigation.goBack();
+    }
+
+    return (
+        <>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={handleNavigateToBack}>
+                    <Icon name="arrow-left" size={20} color="#34cb79" />
+                </TouchableOpacity>
+
+                <Text style={styles.title}>Bem-Vindo</Text>
+                <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
+
+                <View style={styles.mapContainer}> 
+                    <MapView style={styles.map} />
+                </View>
+            </View>
+        </>
+    );
 };
 
 const styles = StyleSheet.create({
