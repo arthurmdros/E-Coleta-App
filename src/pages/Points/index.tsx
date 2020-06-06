@@ -3,6 +3,7 @@ import { Feather as Icon } from '@expo/vector-icons'
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MapView from 'react-native-maps';
+import { SvgUri } from 'react-native-svg';
 import Constants from 'expo-constants';
 
 const Points = () => {
@@ -25,6 +26,43 @@ const Points = () => {
                 <View style={styles.mapContainer}> 
                     <MapView style={styles.map} />
                 </View>
+            </View>
+            <View style={styles.itemsContainer}>
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ paddingHorizontal: 20 }}
+                >
+                    <TouchableOpacity style={styles.item} onPress={() => {}}>
+                        <SvgUri width={42} height={42} uri="http://192.168.1.10:3333/uploads/oleo.svg" />
+                        <Text style={styles.itemTitle}>Óleo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.item} onPress={() => {}}>
+                        <SvgUri width={42} height={42} uri="http://192.168.1.10:3333/uploads/oleo.svg" />
+                        <Text style={styles.itemTitle}>Óleo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.item} onPress={() => {}}>
+                        <SvgUri width={42} height={42} uri="http://192.168.1.10:3333/uploads/oleo.svg" />
+                        <Text style={styles.itemTitle}>Óleo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.item} onPress={() => {}}>
+                        <SvgUri width={42} height={42} uri="http://192.168.1.10:3333/uploads/oleo.svg" />
+                        <Text style={styles.itemTitle}>Óleo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.item} onPress={() => {}}>
+                        <SvgUri width={42} height={42} uri="http://192.168.1.10:3333/uploads/oleo.svg" />
+                        <Text style={styles.itemTitle}>Óleo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.item} onPress={() => {}}>
+                        <SvgUri width={42} height={42} uri="http://192.168.1.10:3333/uploads/oleo.svg" />
+                        <Text style={styles.itemTitle}>Óleo</Text>
+                    </TouchableOpacity>
+                </ScrollView>
             </View>
         </>
     );
