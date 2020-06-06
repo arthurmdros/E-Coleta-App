@@ -2,7 +2,7 @@ import React from 'react';
 import { Feather as Icon } from '@expo/vector-icons'
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { SvgUri } from 'react-native-svg';
 import Constants from 'expo-constants';
 
@@ -24,7 +24,22 @@ const Points = () => {
                 <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
 
                 <View style={styles.mapContainer}> 
-                    <MapView style={styles.map} />
+                    <MapView 
+                        style={styles.map} 
+                        initialRegion={{                            
+                            latitude: -27.2092052,
+                            longitude: -49.6401092,
+                            latitudeDelta: 0.014,
+                            longitudeDelta: 0.014,
+                        }}
+                    >
+                        <Marker
+                            coordinate={{
+                                latitude: -27.2092052,
+                                longitude: -49.6401092,
+                            }}
+                        />
+                    </MapView>
                 </View>
             </View>
             <View style={styles.itemsContainer}>
