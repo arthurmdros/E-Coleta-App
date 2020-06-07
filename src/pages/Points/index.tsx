@@ -18,6 +18,7 @@ interface Point {
   id: number;
   name: string;
   image: string;  
+  image_url: string;
   latitude: number;
   longitude: number;
 }
@@ -63,14 +64,16 @@ const Points = () => {
         ]);
 
       }
+
+      loadPosition();
     }, []);
 
-    useEffect(() => {
+    useEffect(() => {      
       api.get('points', {
         params: {
           city: routeParams.city,
           uf: routeParams.uf,
-          item: selectedItems
+          items: selectedItems
         }
       }).then(res => {
         setPoints(res.data);
@@ -112,7 +115,6 @@ const Points = () => {
                   { initialPosition[0] !== 0 && (
                     <MapView 
                           style={styles.map} 
-                          loadingEnabled={ initialPosition[0] === 0 }
                           initialRegion={{                            
                               latitude: initialPosition[0],
                               longitude: initialPosition[1],
@@ -131,7 +133,7 @@ const Points = () => {
                                 }}
                             >
                                 <View style={styles.mapMarkerContainer}>
-                                    <Image style={styles.mapMarkerImage} source={{ uri: point.image}} />
+                                    <Image style={styles.mapMarkerImage} source={{ uri: point.image_url}} />
                                     <Text style={styles.mapMarkerTitle}>{point.name}</Text>
                                 </View>
                             </Marker>
