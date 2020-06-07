@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, StyleSheet, TouchableOpacity, Image, Linking, Text, SafeAreaView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import api from '../../services/api';
+import Constants from 'expo-constants';
 import * as MailComposer from 'expo-mail-composer';
 
 interface RouteParams {
@@ -13,6 +14,7 @@ interface RouteParams {
 interface Data {
     point: {
         image: string;
+        image_url: string;
         name: string;
         email: string;
         whatsapp: string;
@@ -61,10 +63,10 @@ const Detail = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <TouchableOpacity onPress={handleNavigateToBack}>
-                    <Icon name="arrow-left" size={20} color="34cb79" />
+                    <Icon name="arrow-left" size={20} color="#34cb79" />
                 </TouchableOpacity>
 
-                <Image style={styles.pointImage} source={{ uri: data.point.image}} />
+                <Image style={styles.pointImage} source={{ uri: data.point.image_url}} />
 
                 <Text style={styles.pointName}>{data.point.name}</Text>
                 <Text style={styles.pointItems}>
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 32,
-      paddingTop: 20,
+      paddingTop: 20 + Constants.statusBarHeight,
     },
   
     pointImage: {
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
     footer: {
       borderTopWidth: StyleSheet.hairlineWidth,
       borderColor: '#999',
-      paddingVertical: 20,
+      paddingVertical: 200,
       paddingHorizontal: 32,
       flexDirection: 'row',
       justifyContent: 'space-between'
