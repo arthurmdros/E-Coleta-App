@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Feather as Icon } from '@expo/vector-icons'
-import { View, Image, StyleSheet, ImageBackground, Text, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import {  View, Image, StyleSheet, ImageBackground, Text, KeyboardAvoidingView, Platform, Picker } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,42 +14,42 @@ interface IBGECityResponse {
 }
 
 const Home = () => {
-    const [uf, setUf] = useState('');
-    const [city, setCity] = useState('');
+    const [ufs, setUfs] = useState<string[]>([]);
+    const [cities, setCities] = useState<string[]>([]);
+    const [selectedUf, setSelectedUf] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
     
-    const [selectedUf, setSelectedUf] = useState('0');
-    const [selectedCity, setSelectedCity] = useState('0');
-
     const navigation = useNavigation();
 
+
     function handleNavigateToPoints(){
-        navigation.navigate('Points', {
-          selectedUf,
-          selectedCity,
-        });
-    }
-
-    useEffect(() => {
-      axios.get<IBGEUFResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then(res => {
-          const ufInitials = res.data.map(uf => uf.sigla);
-          console.log(ufInitials);
+      navigation.navigate('Points', {
+        selectedUf,
+        selectedCity,
       });
-
-    }, []);
-
-    useEffect(() => {
-        if(selectedUf === '0') return;
-
-        axios.get<IBGECityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/RN/municipios`).then(res => {
-          const citiesNames = res.data.map(city => city.nome);
-
-          console.log(citiesNames);
-        });
-
-    }, [selectedUf]);
+  }
 
 
-    return (
+      useEffect(() => {
+          axios.get<IBGEUFResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then(res => {
+            const ufInitials = res.data.map(uf => uf.sigla);
+            setUfs(ufInitials);
+         });
+
+      }, []);
+
+      useEffect(() => {
+          if(selectedUf === '') return;
+
+          axios.get<IBGECityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`).then(res => {
+              const citiesNames = res.data.map(city => city.nome);
+              
+              setCities(citiesNames);
+          });
+
+      }, [selectedUf]);
+
+    return (      
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding': undefined}>
             <ImageBackground 
                 source={require('../../assets/home-background.png')}
@@ -65,23 +65,25 @@ const Home = () => {
                 </View>
 
                 <View style={styles.footer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite a UF"
-                        value={uf}
-                        maxLength={2}
-                        autoCapitalize="characters"
-                        autoCorrect={false}
-                        onChangeText={setUf}
-                    />
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite a cidade"
-                        value={city}
-                        autoCorrect={false}
-                        onChangeText={setCity}
-                    />
+                    <Picker                   
+                        selectedValue={selectedUf}                     
+                        onValueChange={value => setSelectedUf(value)}>
+                            {ufs.map(uf => (                              
+                               <Picker.Item label={uf} key={uf} value={uf} >
+                                  {uf}
+                               </Picker.Item>                                 
+                            ))}                        
+                    </Picker>    
+                    
+                    <Picker                       
+                        selectedValue={selectedCity}                     
+                        onValueChange={value => setSelectedCity(value)}>
+                            {cities.map(city => (                              
+                               <Picker.Item label={city} key={city} value={city} >
+                                    {city}
+                               </Picker.Item>
+                            ))}                        
+                    </Picker>   
 
                     <RectButton style={styles.button} onPress={handleNavigateToPoints}>
                         <View style={styles.buttonIcon}> 
@@ -133,15 +135,6 @@ const styles = StyleSheet.create({
   
     select: {},
   
-    input: {
-      height: 60,
-      backgroundColor: '#FFF',
-      borderRadius: 10,
-      marginBottom: 8,
-      paddingHorizontal: 24,
-      fontSize: 16,
-    },
-  
     button: {
       backgroundColor: '#34CB79',
       height: 60,
@@ -149,7 +142,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       overflow: 'hidden',
       alignItems: 'center',
-      marginTop: 8,
+      marginTop: 50,
     },
   
     buttonIcon: {
