@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "E-Coleta-App",
-    "slug": "E-Coleta-App",
+    "name": "E-Coleta",
+    "slug": "E-Coleta",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +21,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.dev.E-Coleta",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.dev.E-Coleta",
+      "versionCode": 1
     }
   }
 }
